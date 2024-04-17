@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<!--    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}" />-->
+</head>
+
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Todo List</h1>
+
+    <a href="/todos/create" class="btn btn-dark mb-3">
+        <i class="fas fa-plus"></i> Add Todo
+    </a>
+
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Completed</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="todo : ${todos}">
+            <!-- Display todo fields in table cells -->
+            <td th:text="${todo.title}">Title</td>
+            <td th:text="${todo.description}">Description</td>
+            <td th:text="${todo.completed} ? 'Yes' : 'No'">Completed</td>
+            <td>
+                <form th:action="@{/todos/update/{id}(id=${todo.id})}" method="get" class="d-inline">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </form>
+
+                <!-- Delete Button -->
+                <form th:action="@{/todos/delete/{id}(id=${todo.id})}" method="post" onsubmit="return confirm('Are you sure?');" class="d-inline">
+                    <button type="submit" class="btn btn-danger btn-action">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+<script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.min.js}"></script>
+</body>
+</html>
